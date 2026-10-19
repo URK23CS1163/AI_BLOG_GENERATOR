@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Blog Content Generator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>AI-Powered Blog Content Generator</h1>
+
+        <p>
+            Generate intelligent blog content using
+            Ollama and Llama 3.2
+        </p>
+
+    </div>
+
+
+    {% if error %}
+
+    <div class="error">
+
+        <h3>⚠️ Error</h3>
+
+        <p>{{ error }}</p>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- USER INPUT -->
+
+    <div class="card">
+
+        <h2>Blog Configuration</h2>
+
+        <form action="/generate" method="POST">
+
+            <label>Blog Topic</label>
+
+            <input
+                type="text"
+                name="topic"
+                placeholder="Example: Artificial Intelligence"
+                value="{{ topic or '' }}"
+                required
+            >
+
+
+            <label>Writing Style</label>
+
+            <select name="style">
+
+                <option
+                    {% if style == "Professional" %}selected{% endif %}>
+                    Professional
+                </option>
+
+                <option>Informative</option>
+
+                <option>Casual</option>
+
+                <option>Technical</option>
+
+            </select>
+
+
+            <label>Tone</label>
+
+            <select name="tone">
+
+                <option
+                    {% if tone == "Friendly" %}selected{% endif %}>
+                    Friendly
+                </option>
+
+                <option>Formal</option>
+
+                <option>Simple</option>
+
+                <option>Engaging</option>
+
+            </select>
+
+
+            <label>Word Count</label>
+
+            <input
+                type="number"
+                name="word_count"
+                value="{{ word_count or 500 }}"
+                min="100"
+                max="2000"
+            >
+
+
+            <label>Target Audience</label>
+
+            <input
+                type="text"
+                name="audience"
+                placeholder="Example: Engineering Students"
+                value="{{ audience or '' }}"
+                required
+            >
+
+
+            <button type="submit">
+                Generate Blog
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if intent %}
+
+    <!-- INTENT DETECTION -->
+
+    <div class="result">
+
+        <h2>🧠 Intent Detection</h2>
+
+        <div class="intent">
+            {{ intent }}
+        </div>
+
+    </div>
+
+
+    <!-- TITLE -->
+
+    <div class="result">
+
+        <h2>📝 Blog Title Generation</h2>
+
+        <div class="title-box">
+            {{ title }}
+        </div>
+
+    </div>
+
+
+    <!-- BLOG -->
+
+    <div class="result">
+
+        <h2>🤖 Blog Generation</h2>
+
+        <div class="content">
+            {{ blog }}
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="result">
+
+        <h2>📋 Summary Generation</h2>
+
+        <div class="content">
+            {{ summary }}
+        </div>
+
+    </div>
+
+
+    <!-- SEO KEYWORDS -->
+
+    <div class="result">
+
+        <h2>🔎 SEO Keywords</h2>
+
+        <div class="keywords">
+            {{ keywords }}
+        </div>
+
+    </div>
+
+
+    <!-- META DESCRIPTION -->
+
+    <div class="result">
+
+        <h2>🌐 Meta Description</h2>
+
+        <div class="content">
+            {{ meta_description }}
+        </div>
+
+    </div>
+
+
+    <!-- SAVE -->
+
+    <div class="card">
+
+        <h2>💾 Save Blog</h2>
+
+        <form action="/save" method="POST">
+
+            <textarea
+                name="title"
+                hidden>{{ title }}</textarea>
+
+            <textarea
+                name="blog"
+                hidden>{{ blog }}</textarea>
+
+            <textarea
+                name="summary"
+                hidden>{{ summary }}</textarea>
+
+            <textarea
+                name="keywords"
+                hidden>{{ keywords }}</textarea>
+
+            <textarea
+                name="meta_description"
+                hidden>{{ meta_description }}</textarea>
+
+            <button type="submit">
+                Save Blog
+            </button>
+
+        </form>
+
+    </div>
+
+    {% endif %}
+
+
+    {% if saved %}
+
+    <div class="success">
+
+        <h2>✅ Blog Saved Successfully!</h2>
+
+        <p>
+            Your blog has been saved successfully.
+        </p>
+
+        <strong>
+            {{ filename }}
+        </strong>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>

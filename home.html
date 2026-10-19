@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Blog Studio</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #111827;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: rgba(255,255,255,0.95);
+            border-bottom: 1px solid #e5e7eb;
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #111827;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            border-radius: 6px;
+
+            background: #111827;
+            color: white !important;
+
+            transition: 0.2s;
+        }
+
+        .nav-button:hover {
+            background: #2563eb;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            position: relative;
+            min-height: 610px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    rgba(37,99,235,0.12),
+                    transparent 40%
+                ),
+                #f7f9fc;
+        }
+
+
+        /* Decorative background */
+
+        .grid {
+            position: absolute;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(37,99,235,0.04) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(37,99,235,0.04) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            pointer-events: none;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 900px;
+
+            padding: 70px 25px;
+        }
+
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 16px;
+
+            border: 1px solid #dbeafe;
+            border-radius: 30px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero h1 {
+            font-size: 62px;
+
+            line-height: 1.08;
+
+            letter-spacing: -2.5px;
+
+            font-weight: 750;
+
+            color: #111827;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+
+        .hero-description {
+            max-width: 680px;
+
+            margin: auto;
+
+            color: #6b7280;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            margin-bottom: 38px;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .hero-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .primary-button {
+            text-decoration: none;
+
+            background: #111827;
+
+            color: white;
+
+            padding: 15px 32px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .primary-button:hover {
+            background: #2563eb;
+
+            transform: translateY(-2px);
+        }
+
+
+        .secondary-button {
+            text-decoration: none;
+
+            background: white;
+
+            color: #374151;
+
+            padding: 15px 32px;
+
+            border-radius: 7px;
+
+            border: 1px solid #d1d5db;
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+
+        .secondary-button:hover {
+            border-color: #2563eb;
+
+            color: #2563eb;
+        }
+
+
+        /* ================= TRUST TEXT ================= */
+
+        .powered {
+            margin-top: 32px;
+
+            font-size: 13px;
+
+            color: #9ca3af;
+        }
+
+
+        .powered strong {
+            color: #6b7280;
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .features-section {
+            background: white;
+
+            padding: 80px 7%;
+        }
+
+
+        .section-heading {
+            text-align: center;
+
+            margin-bottom: 50px;
+        }
+
+
+        .section-heading h2 {
+            font-size: 34px;
+
+            color: #111827;
+
+            margin-bottom: 12px;
+        }
+
+
+        .section-heading p {
+            color: #6b7280;
+
+            font-size: 15px;
+        }
+
+
+        .features {
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+        }
+
+
+        .feature-card {
+            padding: 30px;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            background: white;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+
+            border-color: #bfdbfe;
+
+            box-shadow:
+                0 15px 35px
+                rgba(15,23,42,0.08);
+        }
+
+
+        .feature-number {
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #2563eb;
+
+            margin-bottom: 22px;
+        }
+
+
+        .feature-card h3 {
+            font-size: 19px;
+
+            margin-bottom: 12px;
+
+            color: #111827;
+        }
+
+
+        .feature-card p {
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ================= WORKFLOW ================= */
+
+        .workflow {
+            background: #f7f9fc;
+
+            padding: 75px 7%;
+
+            text-align: center;
+        }
+
+
+        .workflow h2 {
+            font-size: 32px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .workflow-subtitle {
+            color: #6b7280;
+
+            margin-bottom: 45px;
+        }
+
+
+        .steps {
+            max-width: 1000px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .step {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 25px;
+        }
+
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 15px;
+
+            border-radius: 50%;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-weight: 700;
+        }
+
+
+        .step h3 {
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .step p {
+            color: #6b7280;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding: 30px 7%;
+
+            background: #111827;
+
+            color: #9ca3af;
+
+            text-align: center;
+
+            font-size: 13px;
+        }
+
+
+        footer strong {
+            color: white;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav>
+
+    <div class="logo">
+        AI<span>Blog</span> Studio
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="#workflow">
+            How It Works
+        </a>
+
+        <a href="/generator" class="nav-button">
+            Create Blog
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="grid"></div>
+
+    <div class="hero-content">
+
+        <div class="badge">
+            AI-POWERED CONTENT GENERATION
+        </div>
+
+
+        <h1>
+            Create Better Blogs<br>
+            <span>With Artificial Intelligence</span>
+        </h1>
+
+
+        <p class="hero-description">
+
+            Transform your ideas into structured, engaging and
+            SEO-friendly blog content in seconds. Configure your
+            topic, audience and writing preferences and let AI
+            handle the rest.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="/generator"
+                class="primary-button"
+            >
+                Start Creating
+            </a>
+
+
+            <a
+                href="#features"
+                class="secondary-button"
+            >
+                Explore Features
+            </a>
+
+        </div>
+
+
+        <div class="powered">
+
+            Powered by
+            <strong>Ollama</strong>
+            and
+            <strong>Llama 3.2</strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FEATURES ================= -->
+
+<section
+    class="features-section"
+    id="features"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            Everything You Need to Create
+        </h2>
+
+        <p>
+            A complete AI-powered workflow for professional blog creation.
+        </p>
+
+    </div>
+
+
+    <div class="features">
+
+
+        <div class="feature-card">
+
+            <div class="feature-number">
+                01
+            </div>
+
+            <h3>
+                Intelligent Generation
+            </h3>
+
+            <p>
+                Generate complete blog articles based on
+                your topic, preferred writing style, tone,
+                audience and required word count.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-number">
+                02
+            </div>
+
+            <h3>
+                SEO Optimization
+            </h3>
+
+            <p>
+                Automatically generate relevant SEO keywords
+                and an optimized meta description to improve
+                the discoverability of your content.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-number">
+                03
+            </div>
+
+            <h3>
+                Structured Content
+            </h3>
+
+            <p>
+                Receive a complete article with a meaningful
+                title, introduction, organized sections,
+                conclusion and concise summary.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= WORKFLOW ================= -->
+
+<section
+    class="workflow"
+    id="workflow"
+>
+
+    <h2>
+        Simple. Intelligent. Fast.
+    </h2>
+
+    <p class="workflow-subtitle">
+        Create your next blog in four simple steps.
+    </p>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Configure
+            </h3>
+
+            <p>
+                Enter your topic and define your
+                writing preferences.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                Generate
+            </h3>
+
+            <p>
+                Llama 3.2 creates your complete
+                blog content.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Optimize
+            </h3>
+
+            <p>
+                Get your title, summary, keywords
+                and meta description.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <h3>
+                Save
+            </h3>
+
+            <p>
+                Save your generated blog locally
+                for future use.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    AI<span style="color:#60a5fa;">Blog</span> Studio
+    &nbsp; | &nbsp;
+    Powered by <strong>Ollama + Llama 3.2</strong>
+
+</footer>
+
+
+</body>
+</html>
